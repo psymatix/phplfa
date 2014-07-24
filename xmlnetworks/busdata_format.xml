@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<aclfBus id="Bus1" offLine="false" number="1" zoneNumber="1" areaNumber="1" name="Bus 1">
+<baseVoltage unit="KV" value="33.0"/>
+<voltage unit="PU" value="1.045"/>
+<angle unit="DEG" value="0"/>
+<genData>
+<equivGen code="PV">
+<power unit="MW" im="0" re="30.0"/>
+<desiredVoltage unit="PU" value="1.045"/>
+</equivGen>
+</genData>
+<genData>
+<equivGen code="PV">
+<power unit="MW" im="0" re="30.0"/>
+<desiredVoltage unit="PU" value="1.045"/>
+</equivGen>
+</genData>
+<genData>
+<equivGen code="PV">
+<power unit="MW" im="0" re="30.0"/>
+<desiredVoltage unit="PU" value="1.045"/>
+</equivGen>
+</genData>
+<genData>
+<equivGen code="PV">
+<power unit="MW" im="0" re="60.0"/>
+<desiredVoltage unit="PU" value="1.045"/>
+</equivGen>
+</genData>
+<loadData>
+<equivLoad code="CONST_P">
+<constPLoad unit="MW" im="0" re="80"/>
+</equivLoad>
+</loadData>
+</aclfBus>

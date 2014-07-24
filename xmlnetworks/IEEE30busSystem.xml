@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<PowerNetwork id="PowerNetwork" realPowerUnit="MW" reactivePowerUnit="MVAR" apparentPowerUnit="MVA" basemva="100" voltageUpperLimit="1.05" voltageLowerLimit="0.95" voltageAdjustment="0.005">
+    <NetworkBuses>
+        <Bus number="1" voltagePU="1.06" vAngle="0" qMax="0" qMin="0"></Bus> 
+        <Bus number="2" voltagePU="1.043" vAngle="0" qMax="50" qMin="-40">
+            <Element p="21.70" flow="out" />
+            <Element q="12.7" flow="out" />
+            <Element p="40" flow="in" />
+           <!-- <Element q="50" flow="in" /> -->
+        </Bus>
+        <Bus number="3" voltagePU="1.0" vAngle="0" qMax="0" qMin="0">
+            <Element p="2.40" flow="out" />
+            <Element q="1.2" flow="out" />
+        </Bus>
+         <Bus number="4" voltagePU="1.06" vAngle="0" qMax="0" qMin="0">
+            <Element p="7.6" flow="out" />
+            <Element q="1.6" flow="out" />
+        </Bus>
+         <Bus number="5" voltagePU="1.01" vAngle="0" qMax="40" qMin="-40">
+            <Element p="94.2" flow="out" />
+            <Element q="19.0" flow="out" />
+            <!-- <Element q="40" flow="in" /> -->
+        </Bus>
+        <Bus number="6" voltagePU="1.0" vAngle="0" qMax="0" qMin="0"></Bus>
+        <Bus number="7" voltagePU="1.0" vAngle="0" qMax="0" qMin="0">
+          <Element p="22.8" flow="out" />
+          <Element q="10.9" flow="out" />  
+        </Bus>
+         <Bus number="8" voltagePU="1.01" vAngle="0" qMax="40" qMin="-10">
+          <Element p="30.0" flow="out" />
+          <Element q="30.0" flow="out" />  
+         
+        </Bus>
+        <Bus number="9" voltagePU="1.0" vAngle="0" qMax="0" qMin="0"></Bus>
+        <Bus number="10" voltagePU="1.0" vAngle="0" qMax="0" qMin="0">
+          <Element p="5.8" flow="out" />
+          <Element q="2.0" flow="out" /> 
+          <Element q="19" flow="in" /> 
+        </Bus>
+        <Bus number="11" voltagePU="1.082" vAngle="0" qMax="24" qMin="-6">
+          <Element p="5.8" flow="out" />
+          <Element q="2.0" flow="out" /> 
+   
+        </Bus>
+        <Bus number="12" voltagePU="1.0" vAngle="0" qMax="0" qMin="0">
+          <Element p="11.2" flow="out" />
+          <Element q="7.5" flow="out" /> 
+        </Bus>
+        <Bus number="13" voltagePU="1.071" vAngle="0" qMax="24" qMin="-6">
+        </Bus>
+        <Bus number="14" voltagePU="1.0" vAngle="0" qMax="0" qMin="0">
+          <Element p="6.2" flow="out" />
+          <Element q="1.6" flow="out" /> 
+        </Bus>
+       <Bus number="15" voltagePU="1.0" vAngle="0" qMax="0" qMin="0">
+          <Element p="8.2" flow="out" />
+          <Element q="2.5" flow="out" /> 
+        </Bus> 
+        <Bus number="16" voltagePU="1.0" vAngle="0" qMax="0" qMin="0">
+          <Element p="3.5" flow="out" />
+          <Element q="1.8" flow="out" /> 
+        </Bus> 
+        <Bus number="17" voltagePU="1.0" vAngle="0" qMax="0" qMin="0">
+          <Element p="9.0" flow="out" />
+          <Element q="5.8" flow="out" /> 
+        </Bus> 
+        <Bus number="18" voltagePU="1.0" vAngle="0" qMax="0" qMin="0">
+          <Element p="3.2" flow="out" />
+          <Element q="0.9" flow="out" /> 
+        </Bus> 
+        <Bus number="19" voltagePU="1.0" vAngle="0" qMax="0" qMin="0">
+          <Element p="9.5" flow="out" />
+          <Element q="3.4" flow="out" /> 
+        </Bus> 
+        <Bus number="20" voltagePU="1.0" vAngle="0" qMax="0" qMin="0">
+          <Element p="2.2" flow="out" />
+          <Element q="0.7" flow="out" /> 
+        </Bus> 
+        <Bus number="21" voltagePU="1.0" vAngle="0" qMax="0" qMin="0">
+          <Element p="17.5" flow="out" />
+          <Element q="11.2" flow="out" /> 
+        </Bus> 
+        <Bus number="22" voltagePU="1.0" vAngle="0" qMax="0" qMin="0"></Bus> 
+        <Bus number="23" voltagePU="1.0" vAngle="0" qMax="0" qMin="0">
+          <Element p="3.2" flow="out" />
+          <Element q="1.6" flow="out" /> 
+        </Bus> 
+        <Bus number="24" voltagePU="1.0" vAngle="0" qMax="0" qMin="0">
+          <Element p="8.7" flow="out" />
+          <Element q="6.7" flow="out" /> 
+          <Element q="4.3" flow="in" /> 
+        </Bus> 
+        <Bus number="25" voltagePU="1.0" vAngle="0" qMax="0" qMin="0"></Bus>
+        <Bus number="26" voltagePU="1.0" vAngle="0" qMax="0" qMin="0">
+          <Element p="3.5" flow="out" />
+          <Element q="2.3" flow="out" /> 
+        </Bus>
+        <Bus number="27" voltagePU="1.0" vAngle="0" qMax="0" qMin="0"></Bus>
+        <Bus number="28" voltagePU="1.0" vAngle="0" qMax="0" qMin="0"></Bus>
+        <Bus number="29" voltagePU="1.0" vAngle="0" qMax="0" qMin="0">
+          <Element p="2.4" flow="out" />
+          <Element q="0.9" flow="out" /> 
+        </Bus> 
+        <Bus number="30" voltagePU="1.0" vAngle="0" qMax="0" qMin="0">
+          <Element p="10.6" flow="out" />
+          <Element q="1.9" flow="out" /> 
+        </Bus> 
+    </NetworkBuses>
+    <NetworkLines>
+        <Line from="1" to="2" zReal="0.0192" zIm="0.0575" />
+        <Line from="1" to="3" zReal="0.0452" zIm="0.1852" /> 
+        <Line from="2" to="4" zReal="0.0570" zIm="0.1737" />
+        <Line from="3" to="4" zReal="0.0132" zIm="0.0379" />
+        <Line from="2" to="5" zReal="0.0472" zIm="0.1983" />
+        <Line from="2" to="6" zReal="0.0581" zIm="0.1763" />
+        <Line from="4" to="6" zReal="0.0119" zIm="0.0414" />
+        <Line from="5" to="7" zReal="0.0460" zIm="0.1160" />
+        <Line from="6" to="7" zReal="0.0267" zIm="0.0820" />
+        <Line from="6" to="8" zReal="0.0120" zIm="0.0420" />
+        <Line from="6" to="9" zReal="0.0" zIm="0.2080" />
+        <Line from="6" to="10" zReal="0.0" zIm="0.5560" />
+        <Line from="9" to="11" zReal="0.0" zIm="0.2080" />
+        <Line from="9" to="10" zReal="0.0" zIm="0.1100" />
+        <Line from="4" to="12" zReal="0.0" zIm="0.2560" />
+        <Line from="12" to="13" zReal="0.0" zIm="0.1400" />
+        <Line from="12" to="14" zReal="0.1231" zIm="0.2559" />
+        <Line from="12" to="15" zReal="0.0662" zIm="0.1304" />
+        <Line from="12" to="16" zReal="0.0945" zIm="0.1987" />
+        <Line from="14" to="15" zReal="0.2210" zIm="0.1997" />
+        <Line from="16" to="17" zReal="0.0824" zIm="0.1923" />
+        <Line from="15" to="18" zReal="0.1073" zIm="0.2185" />
+        <Line from="18" to="19" zReal="0.0639" zIm="0.1292" />
+        <Line from="19" to="20" zReal="0.0340" zIm="0.0680" />
+        <Line from="10" to="20" zReal="0.0936" zIm="0.2090" /> 
+        <Line from="10" to="17" zReal="0.0324" zIm="0.0845" /> 
+        <Line from="10" to="21" zReal="0.0348" zIm="0.0749" /> 
+        <Line from="10" to="22" zReal="0.0727" zIm="0.1499" /> 
+        <Line from="21" to="22" zReal="0.0116" zIm="0.0236" /> 
+        <Line from="15" to="23" zReal="0.1000" zIm="0.2020" /> 
+        <Line from="22" to="24" zReal="0.1150" zIm="0.1790" /> 
+        <Line from="23" to="24" zReal="0.1320" zIm="0.2700" /> 
+        <Line from="24" to="25" zReal="0.1885" zIm="0.3292" /> 
+        <Line from="25" to="26" zReal="0.2544" zIm="0.3800" /> 
+        <Line from="25" to="27" zReal="0.1093" zIm="0.2087" /> 
+        <Line from="28" to="27" zReal="0.0000" zIm="0.3960" /> 
+        <Line from="27" to="29" zReal="0.2198" zIm="0.4153" /> 
+        <Line from="27" to="30" zReal="0.3202" zIm="0.6027" />
+        <Line from="29" to="30" zReal="0.2399" zIm="0.4533" />
+        <Line from="8" to="28" zReal="0.0636" zIm="0.2000" />
+        <Line from="6" to="28" zReal="0.0169" zIm="0.0599" />
+    </NetworkLines>
+</PowerNetwork>
