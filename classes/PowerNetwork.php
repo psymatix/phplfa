@@ -23,6 +23,10 @@ class PowerNetwork {
      public $lfStep;
      public $vAdjust;
      
+     //benchmark variable
+     
+     public $bm = array();
+     
    function __construct($params = array()) {
         $this->basemva = $params["basemva"] ? $params["basemva"] : null;           
     }
@@ -98,8 +102,8 @@ class PowerNetwork {
         $dUnknown = array(4,6,8,10,12,14); if(in_array($typeDec, $dUnknown)){ $b->unknowns[] = "D"; }
         
     
-        if(in_array($typeDec, $voltageControlledNums) && ($b->number != $this->slackBus) && ($b->gen)){ $this->voltageControlledBuses[] = $b->number; }
-     
+        if(in_array($typeDec, $voltageControlledNums) && ($b->number != $this->slackBus)){ $this->voltageControlledBuses[] = $b->number; }
+                                                             // && ($b->gen) ----------^
         
          
    }//bus unknowns
@@ -256,33 +260,33 @@ class PowerNetwork {
             
            if(($qMinBus < -$Q) && (-$Q < $qMaxBus) ){
              //within limits
-               echo $Bi . '---->' .'qMin: '. $qMin . ',qMax: ' . $qMax . ', Q:' . -$Q . ', vMax:' .  $vMax . ', vMin:' . $vMin . '<br>';
+          //  put back   echo $this->lfStep . '|' . $Bi . '---->' .'qMin: '. $qMin . ',qMax: ' . $qMax . ', Q:' . -$Q . ', vMax:' .  $vMax . ', vMin:' . $vMin . '<br>';
                return -$Q;  
            
                
            }elseif(-$Q > $qMaxBus){
-               //adjust voltage by a certain percentage for next iteration, for PV buses
-               if( in_array($Bi, $this->voltageControlledBuses) && ($this->buses[$Bi]->voltagePU > $this->buses[$Bi]->vMax) ){
+               //adjust voltage by a certain percentage for next iteration, for PV buses 
+                // actually for buses with qMin and qMax
+               
+               if(($this->buses[$Bi]->voltagePU > $this->buses[$Bi]->vMax) ){
                   //reduce voltage slightly
                   $this->buses[$Bi]->voltagePU = $this->buses[$Bi]->voltagePU * (1 - $this->vAdjust);
-                  echo $Bi . 'new vPU ---->' . $this->buses[$Bi]->voltagePU . '<br>'; 
-                  return -$Q;
-                }else{
-                  return $qMax;
+            // put back      echo $Bi . 'new vPU ---->' . $this->buses[$Bi]->voltagePU . '<br>'; 
+                 
                 }
                
+                  return $qMax;
               
            }elseif(-$Q < $qMinBus){ 
                 //too low so increase
-              if( in_array($Bi, $this->voltageControlledBuses) && ($this->buses[$Bi]->voltagePU > $this->buses[$Bi]->vMin)){
+              if(($this->buses[$Bi]->voltagePU > $this->buses[$Bi]->vMin)){
                  //increase voltage slightly
                $this->buses[$Bi]->voltagePU = $this->buses[$Bi]->voltagePU * (1 + $this->vAdjust);
-               echo $Bi . 'new vPU ---->' . $this->buses[$Bi]->voltagePU . '<br>'; 
-               return -$Q;
-                }else{
-               return $qMin;
+         // put back      echo $Bi . 'new vPU ---->' . $this->buses[$Bi]->voltagePU . '<br>'; 
+           
              }
-             
+                
+               return $qMin;
            }
               
     }// reactive power regulation 
@@ -327,6 +331,9 @@ class PowerNetwork {
     }
     
    function loadXMLNetwork($src){
+       
+       #benchmark start
+       $this->rmstart("loadnetwork");
        
        $xml = new DOMDocument();
        $xml->load($src);
@@ -392,8 +399,24 @@ class PowerNetwork {
             $this->addLine( new Line( $lineData->getAttribute("from"), $lineData->getAttribute("to"), $lineData->getAttribute("zReal"), $lineData->getAttribute("zIm")) );
         }
        
-       
+       #benchmark start
+       $this->rmend("loadnetwork");
     
+   }
+   
+   function rmstart($f){
+       $this->bm[$f . "_starttime"] = -microtime(true); 
+       $this->bm[$f . "_startmem"] = -memory_get_usage();
+      
+   }
+   
+   function rmend($f){
+       $this->bm[$f . "_exectime"] =  $this->bm[$f . "_starttime"] += microtime(true); 
+       $this->bm[$f . "_execmem"] = $this->bm[$f . "_startmem"] += memory_get_usage(); 
+       
+       echo $f . " Exec time: " . $this->bm[$f . "_exectime"] . "<br />";
+       echo $f . " Exec Memory: " .  $this->bm[$f . "_execmem"] . "<br />";
+      
    }
     
 }// Network Class

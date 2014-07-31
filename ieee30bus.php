@@ -61,6 +61,9 @@ function printNetwork($n){
     $html .= '<th>Gen MW</th>';
     $html .= '<th>Gen Mvar</th>';
     $html .= '<th>qMax, qMin</th>';
+     $html .= '<th>q Lim</th>';
+    $html .= '<th>vMax, vMin</th>';
+     $html .= '<th>v LIM</th>';
     
     $html .= '</tr>';
     $html .= '<tbody>';
@@ -75,9 +78,17 @@ function printNetwork($n){
               // $html .= '<td></td>';
                 $p = $n->basemva ? $bus->S->getReal() * $n->basemva : $bus->S->getReal();
                 $q = $n->basemva ? $bus->S->getIm() * $n->basemva : $bus->S->getIm();
+                
+                
+                
                 $html .= '<td>' . $p .'</td>';
                 $html .= '<td>' . $q . '</td>';
                 $html .= '<td>'. $bus->qMax . ',' . $bus->qMin .'</td>';
+                $qlim = ($bus->qMax * $n->basemva  < $q) || ($bus->qMin * $n->basemva > $q) ? "excess" : "OK";  
+                $html .= '<td>'.  $qlim .'</td>';
+                $html .= '<td>'. $bus->vMax . ',' . $bus->vMin .'</td>';
+                $lim = ($bus->vMax < $bus->voltagePU) || ($bus->vMin > $bus->voltagePU) ? "excess" : "OK";  
+                $html .= '<td>'.  $lim .'</td>';
                 $html .= '</tr>';
                  
                 }

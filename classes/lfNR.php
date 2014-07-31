@@ -18,15 +18,16 @@ class lfNR {
         
           $J = new JacobianMatrix;
           $JM = $J->formMatrix($network);
-          
+                   
           //form deltaPdeltaQ vector
           $dPdQ = $network->delPDelQMatrix();
+          
         //  echo "DPDQ(" . self::$step . "): ";  print_r($dPdQ); echo "<br>"; 
           $stepSolution = Math_Matrix::solve($JM, $dPdQ);
           $network->solution[] = $stepSolution;
           self::$step++;
           $network->lfStep = self::$step;
-          
+    
           return $stepSolution;
     }
     
