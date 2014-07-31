@@ -26,6 +26,8 @@ $p->initializeNetwork();
 lfNR::solve($p, 2.5E-4, 12);
 printNetwork($p); 
 
+//print_r($p);
+
 $time += microtime(true);
 $mem += memory_get_usage();
 $memkb = $mem/1024;

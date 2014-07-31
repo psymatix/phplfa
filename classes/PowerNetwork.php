@@ -102,7 +102,7 @@ class PowerNetwork {
         $dUnknown = array(4,6,8,10,12,14); if(in_array($typeDec, $dUnknown)){ $b->unknowns[] = "D"; }
         
     
-        if(in_array($typeDec, $voltageControlledNums) && ($b->number != $this->slackBus)){ $this->voltageControlledBuses[] = $b->number; }
+        if(in_array($typeDec, $voltageControlledNums) && ($b->number != $this->slackBus) && ($b->gen)){ $this->voltageControlledBuses[] = $b->number; }
                                                              // && ($b->gen) ----------^
         
          
@@ -418,7 +418,7 @@ class PowerNetwork {
        $this->bm[$f . "_execmem"] = $this->bm[$f . "_startmem"] += memory_get_usage(); 
        
        echo $f . " Exec time: " . $this->bm[$f . "_exectime"] . "<br />";
-       echo $f . " Exec Memory: " .  ($this->bm[$f . "_execmem"]/1024) . "<br />";
+       echo $f . " Exec Memory: " .  ($this->bm[$f . "_execmem"]/1024) . "<br /><br />";
       
    }
     
