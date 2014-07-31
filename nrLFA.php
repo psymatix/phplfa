@@ -69,8 +69,8 @@ function printNetwork($n){
  
  echo "converged after " . lfNR::$step . " steps <br><hr>";
  print_r($n->voltageControlledBuses);
-
-   
+ 
+    
 }
 
 

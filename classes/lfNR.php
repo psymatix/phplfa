@@ -21,13 +21,13 @@ class lfNR {
                    
           //form deltaPdeltaQ vector
           $dPdQ = $network->delPDelQMatrix();
-          
+          $network->rmstart("step_solution");
         //  echo "DPDQ(" . self::$step . "): ";  print_r($dPdQ); echo "<br>"; 
           $stepSolution = Math_Matrix::solve($JM, $dPdQ);
           $network->solution[] = $stepSolution;
           self::$step++;
           $network->lfStep = self::$step;
-    
+         $network->rmend("step_solution");
           return $stepSolution;
     }
     

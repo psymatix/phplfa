@@ -186,6 +186,8 @@ class JacobianMatrix {
     
    
     public function formMatrix($network){
+        $network->rmstart("jacobian");
+        
         $this->network =& $network;
         $this->initialV = $this->network->initialV;
         $this->initialD = $this->network->initialD;     
@@ -268,7 +270,7 @@ class JacobianMatrix {
        
       // make matrix object and return it
       $JM = new Math_Matrix($J);
-       
+       $network->rmend("jacobian");
       return $JM;
         
     }

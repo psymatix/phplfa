@@ -111,7 +111,7 @@ class PowerNetwork {
  
    
     function formAdmittanceMatrix(){
-     
+      $this->rmstart("admittanceMatrix");
        //for each bus, form an array with admittances to other buses if there is a connection
        // sort buses numerically to give some order to process
       
@@ -177,7 +177,7 @@ class PowerNetwork {
        $this->admittanceMatrix = $admittanceMatrixArray;      
        
     }// buses sorted
-    
+     $this->rmend("admittanceMatrix");
   }//formAdmittanceMatrix
   
   
@@ -292,6 +292,8 @@ class PowerNetwork {
     }// reactive power regulation 
  
     function delPDelQMatrix(){
+        $this->rmstart("dPdQ");
+        
         $dP = array(); $dQ = array(); 
         #array to be used to obtain solution for linear equations  
         
@@ -326,6 +328,7 @@ class PowerNetwork {
         
       $dPdQM = array_merge($dP, $dQ);
       $this->dPdQM_network = $dPdQM;
+      $this->rmend("dPdQ");
       return new Math_Vector( $dPdQM );
         
     }
@@ -415,7 +418,7 @@ class PowerNetwork {
        $this->bm[$f . "_execmem"] = $this->bm[$f . "_startmem"] += memory_get_usage(); 
        
        echo $f . " Exec time: " . $this->bm[$f . "_exectime"] . "<br />";
-       echo $f . " Exec Memory: " .  $this->bm[$f . "_execmem"] . "<br />";
+       echo $f . " Exec Memory: " .  ($this->bm[$f . "_execmem"]/1024) . "<br />";
       
    }
     
