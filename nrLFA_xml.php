@@ -23,7 +23,7 @@ $p->loadXMLNetwork("xmlnetworks/exercise6_1.xml");
 
 $p->initializeNetwork();
 
-lfNR::solve($p, 2.5E-4, 2);
+lfNR::solve($p, 2.5E-4, 5);
 printNetwork($p); 
 
 $time += microtime(true);
