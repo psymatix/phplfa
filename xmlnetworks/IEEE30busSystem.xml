@@ -36,12 +36,9 @@
         <Bus number="10" voltagePU="1.0" vAngle="0" qMax="0" qMin="0">
           <Element p="5.8" flow="out" />
           <Element q="2.0" flow="out" /> 
-          <Element q="19" flow="in" /> 
+       <!--   <Element q="19" flow="in" /> -->
         </Bus>
         <Bus number="11" voltagePU="1.082" vAngle="0" qMax="24" qMin="-6">
-          <Element p="5.8" flow="out" />
-          <Element q="2.0" flow="out" /> 
-   
         </Bus>
         <Bus number="12" voltagePU="1.0" vAngle="0" qMax="0" qMin="0">
           <Element p="11.2" flow="out" />
@@ -89,7 +86,7 @@
         <Bus number="24" voltagePU="1.0" vAngle="0" qMax="0" qMin="0">
           <Element p="8.7" flow="out" />
           <Element q="6.7" flow="out" /> 
-          <Element q="4.3" flow="in" /> 
+       <!--   <Element q="4.3" flow="in" /> -->
         </Bus> 
         <Bus number="25" voltagePU="1.0" vAngle="0" qMax="0" qMin="0"></Bus>
         <Bus number="26" voltagePU="1.0" vAngle="0" qMax="0" qMin="0">
