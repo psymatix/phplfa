@@ -239,16 +239,7 @@ class PowerNetwork {
              
             }
            
-            /*
-        if(!$isSlack && in_array($Bi, $this->voltageControlledBuses) && ($this->lfStep == 1)){
-            //specify a range which will be satisfied if qMin and qMax are not specified
-            return $this->qRegulate($Bi, $Q);
-        }else{
-            //slackbus
-            return -$Q;
-        }
-      */
-              return -$Q;
+           return -$Q;
           
     }//reactive Power at Bus
     
@@ -260,7 +251,7 @@ class PowerNetwork {
         $vMax = $this->buses[$Bi]->vMax;
         $vMin = $this->buses[$Bi]->vMin;
         
-        $result = Q;
+        $result = $Q; 
          
             if($qMin === null && $qMax === null){
                 //no values; no regulation 
@@ -285,8 +276,10 @@ class PowerNetwork {
                //adjust voltage by a certain percentage for next iteration, for PV buses 
                 // actually for buses with qMin and qMax
                //reduce voltage slightly within limits and steps
-         echo "greater";
-            while(($result + abs($this->buses[$Bi]->loadMVAR) > $qMax)  && ($this->buses[$Bi]->voltagePU > $this->buses[$Bi]->vMin) ){
+        echo "greater: " ;
+        
+        
+         while(($result + abs($this->buses[$Bi]->loadMVAR) > $qMax)  && ($this->buses[$Bi]->voltagePU > $this->buses[$Bi]->vMin) ){
                    
                         $this->buses[$Bi]->voltagePU = $this->buses[$Bi]->voltagePU * (1 - $this->vAdjust);
                         echo $Bi . 'new vPU ---->' . $this->buses[$Bi]->voltagePU . ' STEP:' . $this->lfStep .'<br>'; 

@@ -65,7 +65,7 @@ function printNetwork($n){
     $html .= '<th>v LIM</th>';
     $html .= '<th>Bus P</th>';
     $html .= '<th>Bus Q</th>';
-    
+   
     
     $html .= '</tr>';
     $html .= '<tbody>';
