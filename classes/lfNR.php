@@ -98,7 +98,7 @@ class lfNR {
        
        foreach($network->voltageControlledBuses as $key=>$busNum){
            
-           // $network->buses[$busNum]->Q = $network->busReactivePower($busNum);
+            //$network->buses[$busNum]->Q = $network->busReactivePower($busNum);
             $network->buses[$busNum]->Q = $network->qRegulate($busNum, $network->busReactivePower($busNum));
             $network->buses[$busNum]->P = ( $network->buses[$busNum]->P && ($network->buses[$busNum]->P > 0) ) ? $network->buses[$busNum]->P : $network->busRealPower($busNum); 
             $network->buses[$busNum]->S = new Math_Complex( $network->buses[$busNum]->P , $network->buses[$busNum]->Q);

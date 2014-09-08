@@ -260,19 +260,22 @@ class PowerNetwork {
         $vMax = $this->buses[$Bi]->vMax;
         $vMin = $this->buses[$Bi]->vMin;
         
+        $result = Q;
          
             if($qMin === null && $qMax === null){
                 //no values; no regulation 
               echo "nulls";
-                return -$Q;
+               $result = $Q;
+               return $result;
             }
             
-            $genQ = -$Q + abs($this->buses[$Bi]->loadMVAR);
+            $genQ = $Q + abs($this->buses[$Bi]->loadMVAR);
             
             if( ($qMin <=  $genQ) && ( $genQ <= $qMax)){
                 //within limits 
                     echo "<br/><strong>within limits: " . $Bi . "Q" . $genQ . " qMin:" . $qMin .  " qMax:" . $qMax . " step:" . $this->lfStep . "</strong><br/>";
-                return -$Q;
+             $result = $Q;
+             return $result;
             }
         
         
@@ -283,30 +286,31 @@ class PowerNetwork {
                 // actually for buses with qMin and qMax
                //reduce voltage slightly within limits and steps
          echo "greater";
-            while(($genQ > $qMax)  && ($this->buses[$Bi]->voltagePU > $this->buses[$Bi]->vMin) ){
+            while(($result + abs($this->buses[$Bi]->loadMVAR) > $qMax)  && ($this->buses[$Bi]->voltagePU > $this->buses[$Bi]->vMin) ){
                    
                         $this->buses[$Bi]->voltagePU = $this->buses[$Bi]->voltagePU * (1 - $this->vAdjust);
                         echo $Bi . 'new vPU ---->' . $this->buses[$Bi]->voltagePU . ' STEP:' . $this->lfStep .'<br>'; 
-                        $this->busReactivePower($Bi);
+                        $result = $this->busReactivePower($Bi);
                    }
                 
-                return -$Q;
-                 // return $qMax;
+                //return $Q;
+                 
               
            }elseif($genQ < $qMin){ 
                 //too low so increase
                  echo "lesser";
-               while( ($genQ < $qMin) && ($this->buses[$Bi]->voltagePU > $this->buses[$Bi]->vMax) ){
+               while(($result + abs($this->buses[$Bi]->loadMVAR) < $qMin) && ($this->buses[$Bi]->voltagePU > $this->buses[$Bi]->vMax) ){
                         
                         $this->buses[$Bi]->voltagePU = $this->buses[$Bi]->voltagePU * (1 + $this->vAdjust);
                         echo $Bi . 'new vPU ---->' . $this->buses[$Bi]->voltagePU . ' STEP:' . $this->lfStep . '<br>'; 
-                        $this->busReactivePower($Bi);
+                        $result = $this->busReactivePower($Bi);
                   }
              
-                return -$Q;
+              //  return $Q;
               // return $qMin;
            }
-                
+          
+           return $result;
            
     }// reactive power regulation 
     
