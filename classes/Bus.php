@@ -25,13 +25,18 @@ class Bus {
     public $vMax;
     public $vMin;
     public $gen;
+    public $genMVAR = 0;
+    public $genMW = 0;
+    public $loadMVAR = 0;
+    public $loadMW = 0;
     
     
     
     function __construct($number, $voltagePU = null, $vAngle = null, $qMax = null, $qMin = null) {
        //   all parameters can be null if not specified
        //   bus power is a function of the elements connected to it -  loads or generators
-        
+       $vAngle = $vAngle ? (float) $vAngle : null;
+       
        $this->number = intval($number);
        $this->voltagePU = $voltagePU;
        $this->voltageAngle = $vAngle;
@@ -50,9 +55,30 @@ class Bus {
         
         // add a new element to the bus
          $this->elements[] = $element;
-        if($element->flow == "in" && $element->P !== null){ $this->gen = true;} 
+         
+        if($element->flow == "in" && $element->P !== null){ 
+            $this->gen = true;
+            $this->genMW += $element->P;
+        } 
         
-        //update parameters based on this new element
+        if($element->flow == "in" && $element->Q !== null){ 
+            $this->genMVAR += $element->Q;
+        } 
+        
+        if($element->flow == "out" && $element->Q !== null){ 
+            $this->loadMVAR += $element->Q;
+        }
+        
+        if($element->flow == "out" && $element->P !== null){ 
+            
+            $this->loadMW += $element->P;
+        }
+        
+            
+        //separate gen power from bus power
+        
+        
+         //update parameters based on this new element
          // if element power is null then it has no effect on the Bus apparent power
          // maybe a function should check if
          

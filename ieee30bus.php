@@ -35,7 +35,6 @@ $p->loadXMLNetwork("xmlnetworks/IEEE30busSystem.xml");
 
 $p->initializeNetwork();
 
-//print_r($p->voltageControlledBuses);
 
 //print_r( lfNR::exec($p) );
 
@@ -44,7 +43,7 @@ printNetwork($p);
 
 $time += microtime(true);
 echo "<br><hr>";
-echo "completed in $time seconds";
+echo "completed in $time seconds <br>";
 
 
 function printNetwork($n){
@@ -56,14 +55,17 @@ function printNetwork($n){
     $html .= '<th>No.</th>';
     $html .= '<th>|V|</th>';
     $html .= '<th>d</th>';
-   // $html .= '<th>Load MW</th>';
-   // $html .= '<th>Load Mvar</th>';
+    $html .= '<th>Load MW</th>';
+    $html .= '<th>Load Mvar</th>';
     $html .= '<th>Gen MW</th>';
     $html .= '<th>Gen Mvar</th>';
     $html .= '<th>qMax, qMin</th>';
-     $html .= '<th>q Lim</th>';
+    $html .= '<th>q Lim</th>';
     $html .= '<th>vMax, vMin</th>';
-     $html .= '<th>v LIM</th>';
+    $html .= '<th>v LIM</th>';
+    $html .= '<th>Bus P</th>';
+    $html .= '<th>Bus Q</th>';
+    
     
     $html .= '</tr>';
     $html .= '<tbody>';
@@ -74,21 +76,33 @@ function printNetwork($n){
                 $html .= '<td>'. $bus->number .'</td>';
                 $html .= '<td>'. $bus->voltagePU . '</td>';
                 $html .= '<td>'. $bus->voltageAngle . '</td>';
-              // $html .= '<td></td>';
-              // $html .= '<td></td>';
+           
                 $p = $n->basemva ? $bus->S->getReal() * $n->basemva : $bus->S->getReal();
                 $q = $n->basemva ? $bus->S->getIm() * $n->basemva : $bus->S->getIm();
                 
+           #     $genP = $n->basemva ? $bus->genMW * $n->basemva : $bus->genMW;
+           #     $genQ = $n->basemva ? $bus->genMVAR * $n->basemva : $bus->genMVAR;
+                
+                $loadP = $n->basemva ? $bus->loadMW * $n->basemva : $bus->loadMW;
+                $loadQ = $n->basemva ? $bus->loadMVAR * $n->basemva : $bus->loadMVAR;
                 
                 
-                $html .= '<td>' . $p .'</td>';
-                $html .= '<td>' . $q . '</td>';
+                $genP = $p + abs($loadP);
+                $genQ = $q + abs($loadQ);
+                
+              
+                $html .= '<td>' . abs($loadP) . '</td>';
+                $html .= '<td>' . abs($loadQ) . '</td>';
+                $html .= '<td>' . $genP .'</td>';
+                $html .= '<td>' . $genQ . '</td>';
                 $html .= '<td>'. $bus->qMax . ',' . $bus->qMin .'</td>';
-                $qlim = ($bus->qMax * $n->basemva  < $q) || ($bus->qMin * $n->basemva > $q) ? "excess" : "OK";  
+                $qlim = ($bus->qMax * $n->basemva  < $genQ) || ($bus->qMin * $n->basemva > $genQ) ? "excess" : "OK";  
                 $html .= '<td>'.  $qlim .'</td>';
                 $html .= '<td>'. $bus->vMax . ',' . $bus->vMin .'</td>';
                 $lim = ($bus->vMax < $bus->voltagePU) || ($bus->vMin > $bus->voltagePU) ? "excess" : "OK";  
                 $html .= '<td>'.  $lim .'</td>';
+                $html .= '<td>'.  $p . '</td>';
+                $html .= '<td>'.  $q .'</td>';
                 $html .= '</tr>';
                  
                 }
