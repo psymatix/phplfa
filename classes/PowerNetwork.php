@@ -37,6 +37,9 @@ class PowerNetwork {
    }
     
    function addLine(Line $Line){
+        //lines are MDim Nested Arrays with some empty keys to maintain index association Lij
+        //hence Line object is always in second Dimension
+       
       // $l = array();
       // $l[$Line->from][$Line->to] = $Line;
      //  $this->lines[] = $l;
@@ -217,7 +220,7 @@ class PowerNetwork {
   
     
     function busReactivePower($Bi){
-       echo $Bi . " " . $this->lfStep . "<br>"; 
+       echo "<br>". $Bi . " " . $this->lfStep . "<br>"; 
         #Q = -E|Vi||Vj||Yij|sin(0ij - Di + Dj) ; 0 = theta
         $Vi = $this->buses[$Bi]->voltagePU ? $this->buses[$Bi]->voltagePU : $this->initialV;
         $Di = $this->buses[$Bi]->voltageAngle ? $this->buses[$Bi]->voltageAngle : $this->initialD;
@@ -244,7 +247,7 @@ class PowerNetwork {
     }//reactive Power at Bus
     
     function qRegulate($Bi, $Q){
-         
+         echo "<br><br>" . $Bi . " Regulation <hr/>" ;
         $qMax = $this->buses[$Bi]->qMax;
         $qMin = $this->buses[$Bi]->qMin;
         
@@ -277,8 +280,7 @@ class PowerNetwork {
                 // actually for buses with qMin and qMax
                //reduce voltage slightly within limits and steps
         echo "greater: " ;
-        
-        
+            
          while(($result + abs($this->buses[$Bi]->loadMVAR) > $qMax)  && ($this->buses[$Bi]->voltagePU > $this->buses[$Bi]->vMin) ){
                    
                         $this->buses[$Bi]->voltagePU = $this->buses[$Bi]->voltagePU * (1 - $this->vAdjust);
@@ -291,8 +293,12 @@ class PowerNetwork {
               
            }elseif($genQ < $qMin){ 
                 //too low so increase
-                 echo "lesser";
-               while(($result + abs($this->buses[$Bi]->loadMVAR) < $qMin) && ($this->buses[$Bi]->voltagePU > $this->buses[$Bi]->vMax) ){
+                 echo "lesser <br>";
+                  echo "B4 Bus V: " . $this->buses[$Bi]->voltagePU . " VMax:" .  $this->buses[$Bi]->vMax . "<br>";
+                 if(($this->buses[$Bi]->voltagePU < $this->buses[$Bi]->vMax)){
+                 echo "Bus V: " . $this->buses[$Bi]->voltagePU . " VMax:" .  $this->buses[$Bi]->vMax;
+                 }
+               while(($result + abs($this->buses[$Bi]->loadMVAR) < $qMin) && ($this->buses[$Bi]->voltagePU < $this->buses[$Bi]->vMax) ){
                         
                         $this->buses[$Bi]->voltagePU = $this->buses[$Bi]->voltagePU * (1 + $this->vAdjust);
                         echo $Bi . 'new vPU ---->' . $this->buses[$Bi]->voltagePU . ' STEP:' . $this->lfStep . '<br>'; 

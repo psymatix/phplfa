@@ -22,8 +22,24 @@ class Line {
         return $this;
     }
     
-    
+    function LineFlowCurrent($Vi, $Vj){
+       //stores the current as a property of this line
+        $vdiff = Math_ComplexOp::sub($Vi, $Vj);
+        
+        //currents
+        $this->Iij = Math_ComplexOp::mult($this->admittance,$vdiff);
+        $this->Iji = Math_ComplexOp::negative($this->Iij);
+        
+        //flows
+        $this->Sij = Math_ComplexOp::mult($Vi, Math_ComplexOp::conjugate($this->Iij));
+        $this->Sji = Math_ComplexOp::mult($Vj, Math_ComplexOp::conjugate($this->Iji));
+        
+        //losses
+        $this->SLij = Math_ComplexOp::add($this->Sij, $this->Sji);
+        
+    }
    
+    
     
 }// line object
 
