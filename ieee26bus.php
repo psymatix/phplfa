@@ -40,7 +40,12 @@ $p->initializeNetwork();
 //print_r( lfNR::exec($p) );
 
 lfNR::solve($p, 0.001, 12);
-printNetwork($p); 
+//printNetwork($p); 
+
+displayFn::printNetwork($p); 
+displayFn::printNetworkTable($p);
+displayFn::showLineCurrents($p);
+
 
 $time += microtime(true);
 $mem += memory_get_usage();

@@ -24,7 +24,10 @@ $p->loadXMLNetwork("xmlnetworks/example6_Bus.xml");
 $p->initializeNetwork();
 
 lfNR::solve($p, 2.5E-4, 12);
-printNetwork($p); 
+displayFn::printNetwork($p); 
+displayFn::printNetworkTable($p);
+displayFn::showLineCurrents($p);
+
 
 //print_r($p);
 

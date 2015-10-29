@@ -24,10 +24,14 @@ $p->loadXMLNetwork("xmlnetworks/example6_7.xml");
 $p->initializeNetwork();
 
 lfNR::solve($p, 5E-5, 12);
+/*
 printNetwork($p); 
 printNetworkTable($p);
 showLineCurrents($p);
-
+*/
+displayFn::printNetwork($p); 
+displayFn::printNetworkTable($p);
+displayFn::showLineCurrents($p);
 
 $time += microtime(true);
 $mem += memory_get_usage();

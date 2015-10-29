@@ -18,11 +18,13 @@ class Line {
         $this->admittance = $this->impedance ? Math_ComplexOp::inverse($this->impedance) : NULL;
             
         $this->label = ($from !== NULL && $to !== NULL) ? (string)$from . (string)$to : null;
-        
+        $this->bm = array();
+      
         return $this;
     }
     
     function LineFlowCurrent($Vi, $Vj){
+        $this->rmstart("lineflow");
        //stores the current as a property of this line
         $vdiff = Math_ComplexOp::sub($Vi, $Vj);
         
@@ -36,9 +38,28 @@ class Line {
         
         //losses
         $this->SLij = Math_ComplexOp::add($this->Sij, $this->Sji);
-        
+        $this->rmend("lineflow");
     }
    
+    
+    
+    //repeated benchmar functions
+    
+       
+   function rmstart($f){
+       $this->bm[$f . "_starttime"] = -microtime(true); 
+       $this->bm[$f . "_startmem"] = -memory_get_usage();
+      
+   }
+   
+   function rmend($f){
+       $this->bm[$f . "_exectime"] =  $this->bm[$f . "_starttime"] += microtime(true); 
+       $this->bm[$f . "_execmem"] = $this->bm[$f . "_startmem"] += memory_get_usage(); 
+       
+       echo $f . " Exec time: " . $this->bm[$f . "_exectime"] . "<br />";
+       echo $f . " Exec Memory: " .  ($this->bm[$f . "_execmem"]/1024) . "<br /><br />";
+      
+   }
     
     
 }// line object

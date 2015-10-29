@@ -24,7 +24,10 @@ $p->loadXMLNetwork("xmlnetworks/exercise6_1.xml");
 $p->initializeNetwork();
 
 lfNR::solve($p, 2.5E-4, 5);
-printNetwork($p); 
+//printNetwork($p); 
+displayFn::printNetwork($p); 
+displayFn::printNetworkTable($p);
+displayFn::showLineCurrents($p);
 
 $time += microtime(true);
 $mem += memory_get_usage();
