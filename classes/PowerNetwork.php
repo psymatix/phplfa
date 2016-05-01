@@ -22,7 +22,7 @@ class PowerNetwork {
      public static $dPdQM_network;
      public $lfStep;
      public $vAdjust;
-     public $impedancMatrix;
+     public $impedanceMatrix;
      
      //benchmark variable
      
@@ -161,8 +161,8 @@ class PowerNetwork {
                                   $yii = Math_ComplexOp::add($yii, $yij); // add only row wise
                                   $yij = Math_ComplexOp::negative($yij);
 
-                                 //add to row array which will eventually go into matrix object
-                                 $yin[intval($value2->number)] = $yij;
+                                 //add to row array which will eventually go into matrix object -- exclude ground buses
+                                  if($value2->type != "ground"){ $yin[intval($value2->number)] = $yij; }
                               }    
 
 
@@ -172,13 +172,13 @@ class PowerNetwork {
 
                  }//level 2
                  
-             //insert self admittance element in the right place at "column" i
-              $yin[ intval($value1->number) ] = $yii;
+             //insert self admittance element in the right place at "column" i -- exclude ground buses
+             if($value1->type != "ground"){    $yin[ intval($value1->number) ] = $yii; }
               
              //sort this into the right order, add some error handling here
              // admittanceMatrixArray is not zero indexed
               
-            if(ksort($yin)){ $admittanceMatrixArray[ intval($value1->number) ] = $yin; }
+            if(ksort($yin) && $value1->type != "ground"){ $admittanceMatrixArray[ intval($value1->number) ] = $yin; }
             
        }//level 1  
     
@@ -194,12 +194,13 @@ class PowerNetwork {
    function formImpedanceMatrix($source = array()){
        
        
-      $this->rmstart("admittanceMatrix");
+      $this->rmstart("impedanceMatrix");
        //for each bus, form an array with admittances to other buses if there is a connection
        // sort buses numerically to give some order to process
       
-        $admittanceMatrixArray = array();
+        $impedanceMatrixArray = count($source) > 0 ? $source : array();
         
+        /*
         
       if(ksort($this->buses)){
         
@@ -254,13 +255,14 @@ class PowerNetwork {
             if(ksort($yin)){ $admittanceMatrixArray[ intval($value1->number) ] = $yin; }
             
        }//level 1  
-    
+   
        // create matrix object here after looping has finished for all lines and buses
        
-       $this->admittanceMatrix = $admittanceMatrixArray;      
+       $this->impedanceMatrix = $impedanceMatrixArray;      
        
-    }// buses sorted
-     $this->rmend("admittanceMatrix");
+    }// buses sorted */
+     $this->impedanceMatrix = $impedanceMatrixArray; 
+     $this->rmend("impedanceMatrix");
   }//formAdmittanceMatrix
   
   
@@ -490,6 +492,10 @@ class PowerNetwork {
               }//foreach
                         
               }// if elements > 0
+          
+          //set bus type for ground buses
+          $this->buses[ (int) $busData->getAttribute("number")]->type = ($busData->getAttribute("type") == "ground") ? "ground" : null;
+              
        }
        
        
