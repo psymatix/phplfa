@@ -22,6 +22,7 @@ class PowerNetwork {
      public static $dPdQM_network;
      public $lfStep;
      public $vAdjust;
+     public $impedancMatrix;
      
      //benchmark variable
      
@@ -120,6 +121,79 @@ class PowerNetwork {
  
    
     function formAdmittanceMatrix(){
+      $this->rmstart("admittanceMatrix");
+       //for each bus, form an array with admittances to other buses if there is a connection
+       // sort buses numerically to give some order to process
+      
+        $admittanceMatrixArray = array();
+        
+        
+      if(ksort($this->buses)){
+        
+       foreach ($this->buses as $key1=>$value1){
+           
+                
+           $yii = new Math_Complex(0,0); //self admittance object, reset on every "row"
+           $yin = array(); //row array
+           
+           
+           foreach($this->buses as $key2=>$value2){
+            
+                                //check if element exists in lines array
+                                 if(isset($this->lines[$value1->number][$value2->number])){
+                                      $yij = $this->lines[$value1->number][$value2->number]->admittance; 
+
+                                 }elseif(isset($this->lines[$value2->number][$value1->number])){
+
+                                     $yij = $this->lines[$value2->number][$value1->number]->admittance; 
+
+                                 }else{
+                                    $yij_obj = new Math_Complex(0,0);
+                                    $yij = $yij_obj;
+                                 }
+
+
+                               // check if it isn't a self admittance,
+                               // if not, add it up to self admittance number
+                               // and invert 
+
+                              if($value1->number !== $value2->number){
+                                  $yii = Math_ComplexOp::add($yii, $yij); // add only row wise
+                                  $yij = Math_ComplexOp::negative($yij);
+
+                                 //add to row array which will eventually go into matrix object
+                                 $yin[intval($value2->number)] = $yij;
+                              }    
+
+
+
+                           //   echo $value1->number . "-" .  $value2->number . " = " . $yij->toString() . ", ";   
+                           // echo "row" . $key1 . " = " . $lines[$value1->number][$value2->number]->admittance->toString() . ", ";
+
+                 }//level 2
+                 
+             //insert self admittance element in the right place at "column" i
+              $yin[ intval($value1->number) ] = $yii;
+              
+             //sort this into the right order, add some error handling here
+             // admittanceMatrixArray is not zero indexed
+              
+            if(ksort($yin)){ $admittanceMatrixArray[ intval($value1->number) ] = $yin; }
+            
+       }//level 1  
+    
+       // create matrix object here after looping has finished for all lines and buses
+       
+       $this->admittanceMatrix = $admittanceMatrixArray;      
+       
+    }// buses sorted
+     $this->rmend("admittanceMatrix");
+  }//formAdmittanceMatrix
+  
+  
+   function formImpedanceMatrix($source = array()){
+       
+       
       $this->rmstart("admittanceMatrix");
        //for each bus, form an array with admittances to other buses if there is a connection
        // sort buses numerically to give some order to process
