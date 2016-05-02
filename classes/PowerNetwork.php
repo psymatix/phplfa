@@ -30,7 +30,10 @@ class PowerNetwork {
      
    function __construct($params = array()) {
         $this->basemva = $params["basemva"] ? $params["basemva"] : null;           
-    }
+    
+        $this->admittanceMatrix = $params["admittanceMatrix"] ? $params["admittanceMatrix"] : null;             
+   }
+    
     
    
    function addBus(Bus $Bus){
@@ -125,7 +128,8 @@ class PowerNetwork {
        //for each bus, form an array with admittances to other buses if there is a connection
        // sort buses numerically to give some order to process
       
-        $admittanceMatrixArray = array();
+      if(!$this->admittanceMatrix){
+      $admittanceMatrixArray = array();
         
         
       if(ksort($this->buses)){
@@ -187,6 +191,9 @@ class PowerNetwork {
        $this->admittanceMatrix = $admittanceMatrixArray;      
        
     }// buses sorted
+    
+    }
+    
      $this->rmend("admittanceMatrix");
   }//formAdmittanceMatrix
   
