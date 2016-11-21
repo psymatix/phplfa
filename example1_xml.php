@@ -24,7 +24,7 @@ $p->loadXMLNetwork("xmlnetworks/example1.xml");
 $p->initializeNetwork();
 
 lfNR::solve($p, 2.5E-4, 12);
-displayFn::printNetwork($p); 
+displayFn::printNetwork($p);
 displayFn::printNetworkTable($p);
 displayFn::showLineCurrents($p);
 
@@ -37,7 +37,5 @@ echo "<br><hr>";
 echo "completed in $time seconds";
 echo "<br>";
 echo "total memory allocated: $memkb";
-
-var_dump($p->admittanceMatrix);
 
 ?>
