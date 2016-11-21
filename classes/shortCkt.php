@@ -1,31 +1,30 @@
 <?php
 /**
- * Description of shortCkt
+ * Description of shortCkt.
  *
  * @author Simon
  */
-class shortCkt {
+class shortCkt
+{
     //put your code here
 
- function __construct( $e, &$network, $maxIterations = 0){
-        $this->maxIterations = $maxIterations;
-        $this->e = $e;
-        $this->network = &$network;
-        
-    }
-    
-    static function faultCurrent(&$network, &$bus, $Zf){
-        
+ public function __construct($e, &$network, $maxIterations = 0)
+ {
+     $this->maxIterations = $maxIterations;
+     $this->e = $e;
+     $this->network = &$network;
+ }
+
+    public static function faultCurrent(&$network, &$bus, $Zf)
+    {
+
         //If = (Vpu / (Zkk + Zf))
         $k = $bus->number;
         $Zkk = $network->impedanceMatrix[$k][$k];
         $Zeqv = Math_ComplexOp::inverse(Math_ComplexOp::add($Zkk, $Zf));
-        
-        $If = Math_ComplexOp_mult($bus->voltagePU,$Zeqv);
+
+        $If = Math_ComplexOp_mult($bus->voltagePU, $Zeqv);
+
         return $If;
-        
     }
-    
-    
-    
 }

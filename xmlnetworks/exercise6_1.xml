@@ -4,11 +4,11 @@
     <NetworkBuses>
         <Bus number="1" voltagePU="1.0" vAngle="0"></Bus>
         <Bus number="2">
-            <Element p="1.5" flow="out" />
-            <Element q="0.5" flow="out" />
+            <Element p="1.5" flow="out"/>
+            <Element q="0.5" flow="out"/>
         </Bus>
     </NetworkBuses>
     <NetworkLines>
-        <Line from="1" to="2" zReal="0.028" zIm="0.096" />
+        <Line from="1" to="2" zReal="0.028" zIm="0.096"/>
     </NetworkLines>
 </PowerNetwork>
