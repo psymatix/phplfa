@@ -31,6 +31,8 @@ The library allows user to create the following models of a Power Network
 
 6. Jacobian matrix generator
 
+Comments are included in Class files for formulas etc.
+
 Usage
 -----
 Sample networks and formats in /xmlnetworks directory and sample files in root directory including non-xml format
