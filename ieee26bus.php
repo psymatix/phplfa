@@ -30,17 +30,11 @@ $time = -microtime(true);
 $mem = -memory_get_usage();
 
 $p = new PowerNetwork();
-//$p->loadXMLNetwork("example1.xml");
-//$p->loadXMLNetwork("exercise6_1.xml");
 $p->loadXMLNetwork("xmlnetworks/IEEE26busSystem.xml");
 
 $p->initializeNetwork();
 
-
-//print_r( lfNR::exec($p) );
-
 lfNR::solve($p, 0.001, 12);
-//printNetwork($p);
 
 displayFn::printNetwork($p);
 displayFn::printNetworkTable($p);
@@ -56,7 +50,7 @@ echo "completed in $time seconds <br>";
 echo "<br>";
 echo "total memory allocated: $memkb";
 echo "converged after " . lfNR::$step . " steps <br><hr>";
- 
+
 
 ?>
 </body>
